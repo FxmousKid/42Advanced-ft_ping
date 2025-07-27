@@ -12,6 +12,8 @@ modeling/
 ./build/
 ft_ping
 
+inetutils-2.0/
+
 #------------- template .gitignore file C projects. -------------
 
 # Prerequisites
