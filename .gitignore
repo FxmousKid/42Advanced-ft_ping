@@ -11,6 +11,7 @@ modeling/
 # build
 ./build/
 ft_ping
+ref_ping
 
 inetutils-2.0/
 
