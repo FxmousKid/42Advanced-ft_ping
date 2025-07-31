@@ -6,7 +6,7 @@
 #    By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 18:04:01 by inazaria          #+#    #+#              #
-#    Updated: 2025/07/24 18:04:02 by inazaria         ###   ########.fr        #
+#    Updated: 2025/07/31 17:04:55 by inazaria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ BUILD_DIR 	= ./build/
 
 INC_DIR 	= ./includes/
 
-# .c files for source code
+LIBFT_DIR 	= ./libft/
+
+# .c files for source code SRC_FILES_NAMES = main.c
 SRC_FILES_NAMES = main.c
 
 
@@ -36,7 +38,7 @@ DEP_FILES = $(patsubst $(SRC_DIR)%.c, $(BUILD_DIR)%.d, $(SRC_FILES))
 NAME 	:= ft_ping
 CC 		:= cc
 CFLAGS 	:= -gdwarf-4 -Wall -Wextra -Werror -I $(INC_DIR) -MMD -MP
-LFLAGS 	:= 
+LFLAGS 	:= libft/libft.a
 MKDIR 	:= mkdir -p
 RM_RF 	:= rm -rf
 ECHO  	:= echo -e
@@ -60,9 +62,13 @@ $(BUILD_DIR)%.o : $(SRC_DIR)%.c
 # This is to add the .d files as dependencies for linking
 -include $(DEP_FILES)
 
-re : clean all
+re : fclean all
 
 $(NAME) : $(OBJ_FILES)
+	@$(ECHO) "$(BROWN)[BLD] Building libft static library...$(NC)"
+	@$(MAKE) --no-print-directory -s -C $(LIBFT_DIR) all
+	@$(ECHO) "$(GREEN)[BLD] successfully built libft.$(NC)"	
+
 	@$(ECHO) "$(BROWN)[BLD] Building $(NAME) executable...$(NC)"
 	@$(CC) $^ -o $(NAME) $(LFLAGS)
 	@$(ECHO) "$(GREEN)[BLD] Executable built successfully.$(NC)"
@@ -75,6 +81,9 @@ clean :
 	@$(ECHO) "$(GREEN)[CLN] Clean complete.$(NC)"
 
 fclean : 
+	@$(ECHO) "$(BROWN)[CLN] Cleaning Libft object and dependency files...$(NC)\n"
+	@$(MAKE) --no-print-directory -s -C $(LIBFT_DIR) fclean > /dev/null
+	@$(ECHO) "$(GREEN)[CLN] Libft Clean complete.$(NC)"
 	@$(ECHO) "$(BROWN)[CLN] Cleaning object, dependency files, and executable...$(NC)"
 	@$(RM_RF) $(BUILD_DIR) $(NAME)
 	@$(ECHO) "$(GREEN)[CLN] Clean complete.$(NC)"
