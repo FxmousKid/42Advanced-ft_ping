@@ -6,44 +6,38 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:44:12 by inazaria          #+#    #+#             */
-/*   Updated: 2025/07/24 18:04:51 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/02 01:21:27 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 
-static int
-parse_arg(char *argv[])
-{
-	if (!argv || !*argv)
-		return (FUNC_FAILURE);
-
-	return (FUNC_SUCCESS);
-}
-
-static int	
-ft_ping(void)
+static void
+ft_ping(struct s_ping *data)
 {
 	printf("ft_ping !\n");
+	(void)data;
 
-	return (FUNC_SUCCESS);
 }
+
+// For proper error handling
+extern const char *__progname;
 
 int 
 main(int argc, char *argv[])
 {
-	if (argc != 2) {
-		printf(BAD_ARG);
-		exit(EXIT_FAILURE);
+	struct s_ping	data = {.progname = __progname};
+	
+	
+	if (argc < 2) {
+		ARG_MISSING(__progname);
+		MORE_INFO_MSG(argv[0]);
+		exit(EXIT_BAD_ARGS);
 	}
 
-	if (!parse_arg(argv)) {
-		printf(INVALID_ARG);
-		exit(EXIT_FAILURE);
-	}
+	if (!parse_cli(argc, argv, &data))
+		exit(EXIT_BAD_ARGS);
 
-	int	result;
-
-	result = ft_ping();
-	return (result == FUNC_SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE);
+	ft_ping(&data);
+	return (data.exit_code);
 }

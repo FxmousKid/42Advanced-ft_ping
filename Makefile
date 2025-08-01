@@ -6,7 +6,7 @@
 #    By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 18:04:01 by inazaria          #+#    #+#              #
-#    Updated: 2025/07/31 17:04:55 by inazaria         ###   ########.fr        #
+#    Updated: 2025/08/01 14:27:11 by inazaria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ LIBFT_DIR 	= ./libft/
 
 # .c files for source code SRC_FILES_NAMES = main.c
 SRC_FILES_NAMES = main.c
+SRC_FILES_NAMES += parser/parser.c
 
 
 # Full path to .c files
@@ -81,7 +82,7 @@ clean :
 	@$(ECHO) "$(GREEN)[CLN] Clean complete.$(NC)"
 
 fclean : 
-	@$(ECHO) "$(BROWN)[CLN] Cleaning Libft object and dependency files...$(NC)\n"
+	@$(ECHO) "$(BROWN)[CLN] Cleaning Libft object and dependency files...$(NC)"
 	@$(MAKE) --no-print-directory -s -C $(LIBFT_DIR) fclean > /dev/null
 	@$(ECHO) "$(GREEN)[CLN] Libft Clean complete.$(NC)"
 	@$(ECHO) "$(BROWN)[CLN] Cleaning object, dependency files, and executable...$(NC)"
