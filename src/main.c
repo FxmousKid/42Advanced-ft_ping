@@ -6,7 +6,7 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:44:12 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/02 01:21:27 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/02 18:26:23 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ main(int argc, char *argv[])
 		exit(EXIT_BAD_ARGS);
 
 	ft_ping(&data);
-	return (data.exit_code);
+	return data.exit_code;
 }

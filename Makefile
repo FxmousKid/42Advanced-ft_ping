@@ -6,7 +6,7 @@
 #    By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 18:04:01 by inazaria          #+#    #+#              #
-#    Updated: 2025/08/01 14:27:11 by inazaria         ###   ########.fr        #
+#    Updated: 2025/08/02 13:07:23 by inazaria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,10 @@ LIBFT_DIR 	= ./libft/
 
 # .c files for source code SRC_FILES_NAMES = main.c
 SRC_FILES_NAMES = main.c
+
 SRC_FILES_NAMES += parser/parser.c
+
+SRC_FILES_NAMES += utils/print_help.c
 
 
 # Full path to .c files

@@ -6,7 +6,7 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:55:48 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/02 01:25:10 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/02 13:06:53 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <sys/socket.h>
 # include <netinet/in.h>
 # include <getopt.h>
-# include <string.h>
+# include <string.h> // IWYU pragma: keep
 # include "../libft/includes/libft.h" // IWYU pragma: keep
 
 # include "ANSI-colors.h"
@@ -41,11 +41,11 @@
 # define MORE_INFO_MSG(name)		fprintf(stderr, "Try '%s --help' for more information.\n", (name))
 
 # define VERSION "\
-	ft_ping 1.0\n\
-	No Copyright (C) 2025 inazaria.\n\
-	This is free software: you are free to change and redistribute it.\n\
-	There is NO WARRANTY, to the extent permitted by law.\n\n\
-	Written by Iyan Nazarian.\n\
+ft_ping 1.0\n\
+No Copyright (C) 2025 inazaria.\n\
+This is free software: you are free to change and redistribute it.\n\
+There is NO WARRANTY, to the extent permitted by law.\n\n\
+Written by Iyan Nazarian.\n\
 "
 
 struct s_ping {
@@ -56,5 +56,6 @@ struct s_ping {
 };
 
 bool	parse_cli(int argc, char *argv[], struct s_ping *data);
+void	print_help(const char *progname);
 
 #endif
