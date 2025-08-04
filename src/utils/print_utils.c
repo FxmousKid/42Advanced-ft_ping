@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_help.c                                       :+:      :+:    :+:   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 13:05:38 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/02 17:52:25 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/04 18:29:16 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,14 @@ Options marked with (root only) are available only to superuser.\n\
 Report bugs on https://www.github.com/FxmousKid/42Advanced-ft_ping\n\
 \
 	", progname);
+}
+
+void	print_info(struct s_ping *data)
+{
+	printf("%s=========== STATS ===========%s\n", YEL, WHT);
+	printf("%sProgram: %s%s\n", YEL, data->progname, WHT);
+	printf("%sHost:    %s%s\n", YEL, data->host ? data->host : "unknown", WHT);
+	printf("%sSocket:  %s%d%s\n", YEL, WHT, data->socket, WHT);
+	printf("%sVerbose: %s%s\n", YEL, data->is_verbose ? "enabled" : "disabled", WHT);
+	printf("%s=============================%s\n", YEL, WHT);
 }
