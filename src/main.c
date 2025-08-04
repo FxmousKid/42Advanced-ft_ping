@@ -5,39 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/24 13:44:12 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/02 18:26:23 by inazaria         ###   ########.fr       */
+/*   Created: 2025/08/04 18:31:43 by inazaria          #+#    #+#             */
+/*   Updated: 2025/08/04 18:31:47 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
+#include <stdlib.h>
 
-static void
-ft_ping(struct s_ping *data)
+static void ft_ping(struct s_ping *data)
 {
-	printf("ft_ping !\n");
-	(void)data;
-
+	print_info(data);
 }
+
 
 // For proper error handling
 extern const char *__progname;
 
-int 
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-	struct s_ping	data = {.progname = __progname};
-	
+	struct s_ping	data = {.progname = __progname ? __progname : argv[0]};
 	
 	if (argc < 2) {
-		ARG_MISSING(__progname);
+		ARG_MISSING(data.progname);
 		MORE_INFO_MSG(argv[0]);
 		exit(EXIT_BAD_ARGS);
 	}
 
-	if (!parse_cli(argc, argv, &data))
-		exit(EXIT_BAD_ARGS);
-
+	get_logfile(); // Creating logfile -- exits on failure
+	parse_cli(argc, argv, &data);
 	ft_ping(&data);
 	return data.exit_code;
 }

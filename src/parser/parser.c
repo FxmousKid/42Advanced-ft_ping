@@ -6,11 +6,27 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 18:21:34 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/02 18:26:44 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/04 18:24:55 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
+#include <regex.h>
+#include <getopt.h>
+#include <stdio.h>
+#include LIBFT_PATH
+
+static bool parse_host(struct s_ping *data, char *host)
+{
+	regex_t	regex;
+	if (regcomp(&regex, IPV4_REGEX, REG_EXTENDED)) {
+		log_error("Failed to create regex", get_logfile());
+		return false;
+	}
+
+	data->host = host;
+	return true;
+}
 
 /* switch case gets called for each argument, so each case statement should
  * properly 'exit' the function (break, return, *no* exit)
@@ -41,6 +57,8 @@ bool opts_handle(struct option *lopts, int lopts_idx, char *argv[],
 		printf(VERSION);
 		return false;	
 	case 'v':
+	printf("optind = %d\n", optind);
+		fflush(stdout);
 		data->is_verbose = true;
 		break;
 	}	
@@ -50,15 +68,13 @@ bool opts_handle(struct option *lopts, int lopts_idx, char *argv[],
 /* Parsing should not allocate anything, since it can exit
  * */
 
-bool
-parse_cli(int argc, char *argv[], struct s_ping *data)
-{
-	if (!argv || !*argv)
-		return FUNC_FAILURE;
 
+void parse_cli(int argc, char *argv[], struct s_ping *data)
+{
 	int	opt;
 	char	*sopts = "+vV?";
 	int	lopts_idx = 0;
+
 	struct option lopts[] = {
 		{"help", no_argument, NULL, 'h'},
 		{"version", no_argument, NULL, 'V'},
@@ -71,14 +87,17 @@ parse_cli(int argc, char *argv[], struct s_ping *data)
 			exit(data->exit_code);
 		opt = getopt_long(argc, argv, sopts, lopts, &lopts_idx);
 	}
+
+
 	if (!argv[optind]) {
 		ARG_MISSING(data->progname);
 		MORE_INFO_MSG(argv[0]);
 		exit(EXIT_BAD_ARGS);
 	}
 
+
 	// the first non option argument is the [HOST]
 	// further arguments are ignored
-	data->host = argv[optind];
-	return FUNC_SUCCESS;
+	if (!parse_host(data, argv[optind]))
+		fatal("Failed to parse host");
 }
