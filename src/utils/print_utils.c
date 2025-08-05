@@ -22,14 +22,29 @@ Report bugs on https://www.github.com/FxmousKid/42Advanced-ft_ping\n\
 ", progname);
 }
 
-void	print_info(struct s_ping *data)
+void print_info(struct s_ping *data)
 {
+
+	const int pad_width = 10;
+	struct s_hosts *hosts = data->hosts;
+
 	printf("%s=========== STATS ===========%s\n", YEL, WHT);
-	printf("%sProgram: %s%s\n", YEL, data->progname, WHT);
-	// printf("%sHost:    %s%s\n", YEL, data->host ? data->host : "unknown", WHT);
-	printf("%sSocket:  %s%d%s\n", YEL, WHT, data->socket, WHT);
-	printf("%sVerbose: %s%s\n", YEL, data->is_verbose ? "enabled" : "disabled", WHT);
-	printf("%scount:   %d%s\n", YEL, data->count_max, WHT);
+
+	// "%-*s" will left-align text in a field of width 'pad_width'
+	printf("%s%-*s%s%s\n", YEL, pad_width, "Program:", WHT, data->progname);
+
+	printf("%s%-*s%s", YEL, pad_width, "Hosts:", WHT);
+	while (hosts) {
+	printf("%s%s", hosts->host, hosts->next ? ", " : "");
+	hosts = hosts->next;
+	}
+	printf("\n");
+
+	printf("%s%-*s%s%d\n", YEL, pad_width, "Socket:", WHT, data->socket);
+	printf("%s%-*s%s%s\n", YEL, pad_width, "Verbose:", WHT,
+		data->is_verbose ? "enabled" : "disabled");
+	printf("%s%-*s%s%d\n", YEL, pad_width, "Count:", WHT, data->count_max);
+
 	printf("%s=============================%s\n", YEL, WHT);
 	fflush(stdout);
 }
