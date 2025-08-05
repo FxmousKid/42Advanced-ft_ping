@@ -6,7 +6,7 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:31:43 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/04 20:13:53 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/05 22:03:52 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int main(int argc, char *argv[])
 	}
 
 	get_logfile(); // Creating logfile -- exits on failure
+	atexit(log_close);
+
+	get_hosts(); // allocating 1st host -- exits on failure
+	atexit(hosts_free);
+	
 	parse_cli(argc, argv, &data);
 	ft_ping(&data);
 	return data.exit_code;

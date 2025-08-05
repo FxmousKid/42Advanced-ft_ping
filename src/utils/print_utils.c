@@ -6,7 +6,7 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 13:05:38 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/05 13:15:53 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/05 21:48:42 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_info(struct s_ping *data)
 {
 	printf("%s=========== STATS ===========%s\n", YEL, WHT);
 	printf("%sProgram: %s%s\n", YEL, data->progname, WHT);
-	printf("%sHost:    %s%s\n", YEL, data->host ? data->host : "unknown", WHT);
+	// printf("%sHost:    %s%s\n", YEL, data->host ? data->host : "unknown", WHT);
 	printf("%sSocket:  %s%d%s\n", YEL, WHT, data->socket, WHT);
 	printf("%sVerbose: %s%s\n", YEL, data->is_verbose ? "enabled" : "disabled", WHT);
 	printf("%scount:   %d%s\n", YEL, data->count_max, WHT);

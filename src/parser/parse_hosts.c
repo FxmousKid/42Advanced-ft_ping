@@ -6,22 +6,62 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:47:25 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/05 21:07:33 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/05 22:07:10 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 #include <regex.h>
 #include <getopt.h>
+#include <stdlib.h>
 
-bool parse_hosts(struct s_ping *data, char *argv[])
+struct s_hosts	*get_hosts(void)
 {
-	regex_t	regex;
-	if (regcomp(&regex, IPV4_REGEX, REG_EXTENDED)) {
+	static struct s_hosts *hosts = NULL;
+
+	if (!hosts)
+		hosts = calloc(1, sizeof(struct s_hosts));
+
+	if (!hosts) {
+		log_error_strerror("Failed to create hosts", get_logfile());
+		exit(EXIT_OTHER);	
+	}
+
+	return hosts;
+}
+
+static void	hosts_free_aux(struct s_hosts *hosts)
+{
+	struct s_hosts *tmp;
+
+	while (hosts) {
+		tmp = hosts->next;
+		free(hosts);
+		hosts = tmp;
+	}
+}
+
+void	hosts_free(void)
+{
+	hosts_free_aux(get_hosts());
+}
+
+bool	parse_hosts(struct s_ping *data, char *argv[])
+{
+	(void) argv;
+	(void) data;
+
+	regex_t	ip_regex;
+	if (regcomp(&ip_regex, IPV4_REGEX, REG_EXTENDED)) {
 		log_error("Failed to create regex", get_logfile());
 		return false;
 	}
+	/* doing stuff with regex */
+	regfree(&ip_regex);
 
-	data->host = argv[optind];
+
+	// struct s_hosts *hosts;
+	// if (!(hosts = calloc(sizeof(struct s_hosts), 1)))
+		
 	return true;
 }

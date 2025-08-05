@@ -6,7 +6,7 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 18:21:34 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/05 20:55:40 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/05 21:51:08 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ bool opts_handle(struct option *lopts, int lopts_idx, char *argv[],
 		printf(VERSION);
 		return false;	
 	case 'v':
-	printf("optind = %d\n", optind);
-		fflush(stdout);
 		data->is_verbose = true;
 		break;
 	}	
@@ -84,7 +82,6 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 	};
 
 	opt = getopt_long(argc, argv, sopts, lopts, &lopts_idx);
-	// while (opt != 1) {
 	while (opt != -1) {
 
 		if (!opts_handle(lopts, lopts_idx, argv, data, opt))
@@ -94,13 +91,11 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 
 	}
 
-
 	if (!argv[optind]) {
 		ARG_MISSING(data->progname);
 		MORE_INFO_MSG(argv[0]);
 		exit(EXIT_BAD_ARGS);
 	}
-
 
 	// all non option arguments are considered hosts
 	// and should there be all parsed

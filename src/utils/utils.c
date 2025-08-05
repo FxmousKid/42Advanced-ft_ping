@@ -6,7 +6,7 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:00:11 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/05 18:36:40 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/05 21:49:31 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 bool	has_host(struct s_ping *data)
 {
-	return (data->ip.sin_addr.s_addr || data->host);
+	return (data->hosts != NULL);
 }
