@@ -12,6 +12,7 @@ modeling/
 ./build/
 ft_ping
 ref_ping
+logfile.txt
 
 inetutils-2.0/
 

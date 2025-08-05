@@ -6,7 +6,7 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:57:10 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/04 17:56:03 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/04 20:13:48 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 # define FUNC_SUCCESS 1
 # define FUNC_FAILURE 0
 
-# define ARG_MISSING(name)		fprintf(stderr, "%s: missing host operator.\n", (name))
-# define OPT_SHORT_INV(name,opt) 	fprintf(stderr, "%s: invalid option -- '%s'\n", (name), (opt))
-# define OPT_LONG_INV(name,opt)		fprintf(stderr, "%s: unrecognized option -- '%s'\n", (name), (opt))
-# define MORE_INFO_MSG(name)		fprintf(stderr, "Try '%s --help' for more information.\n", (name))
+# define ARG_MISSING(name)		fprintf(stderr, "%s: missing host operator.\n", (name));
+# define OPT_SHORT_INV(name,opt) 	fprintf(stderr, "%s: invalid option -- '%s'\n", (name), (opt));
+# define OPT_LONG_INV(name,opt)		fprintf(stderr, "%s: unrecognized option -- '%s'\n", (name), (opt));
+# define MORE_INFO_MSG(name)		fprintf(stderr, "Try '%s --help' for more information.\n", (name));
 
 # define LOGFILE_NAME	"logfile.txt"
 // # define LOGFILE_NAME	""

@@ -6,29 +6,16 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 18:21:34 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/05 13:46:13 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/05 20:55:40 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "defines.h"
 #include "ft_ping.h"
-#include <regex.h>
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include LIBFT_PATH
-
-static bool parse_host(struct s_ping *data, char *host)
-{
-	regex_t	regex;
-	if (regcomp(&regex, IPV4_REGEX, REG_EXTENDED)) {
-		log_error("Failed to create regex", get_logfile());
-		return false;
-	}
-
-	data->host = host;
-	return true;
-}
 
 /* switch case gets called for each argument, so each case statement should
  * properly 'exit' the function (break, return, *no* exit)
@@ -86,7 +73,7 @@ bool opts_handle(struct option *lopts, int lopts_idx, char *argv[],
 void parse_cli(int argc, char *argv[], struct s_ping *data)
 {
 	int	opt;
-	char	*sopts = "+vV?c:";
+	char	*sopts = "vV?c:";
 	int	lopts_idx = 0;
 
 	struct option lopts[] = {
@@ -97,11 +84,16 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 	};
 
 	opt = getopt_long(argc, argv, sopts, lopts, &lopts_idx);
+	// while (opt != 1) {
 	while (opt != -1) {
+
 		if (!opts_handle(lopts, lopts_idx, argv, data, opt))
 			exit(data->exit_code);
+
 		opt = getopt_long(argc, argv, sopts, lopts, &lopts_idx);
+
 	}
+
 
 	if (!argv[optind]) {
 		ARG_MISSING(data->progname);
@@ -110,8 +102,8 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 	}
 
 
-	// the first non option argument is the [HOST]
-	// further arguments are ignored
-	if (!parse_host(data, argv[optind]))
-		fatal("Failed to parse host");
+	// all non option arguments are considered hosts
+	// and should there be all parsed
+	if (!parse_hosts(data, argv))
+		log_fatal("Failed to parse hosts", get_logfile());
 }
