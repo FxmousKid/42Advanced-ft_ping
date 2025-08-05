@@ -35,8 +35,8 @@ void print_info(struct s_ping *data)
 
 	printf("%s%-*s%s", YEL, pad_width, "Hosts:", WHT);
 	while (hosts) {
-	printf("%s%s", hosts->host, hosts->next ? ", " : "");
-	hosts = hosts->next;
+		printf("%s%s", hosts->host, hosts->next ? ", " : "");
+		hosts = hosts->next;
 	}
 	printf("\n");
 

@@ -37,7 +37,6 @@ void	log_close(void)
 
 void	log_error(const char *msg, FILE *log)
 {
-	fprintf(stderr, "%s[FATAL] %s%s\n", RED, msg, WHT);
 	fprintf(log, "%s[FATAL] %s%s\n", RED, msg, WHT);
 }
 
