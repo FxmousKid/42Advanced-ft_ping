@@ -2,15 +2,16 @@
 # define FT_PING_H
 
 # include <stdio.h> // IWYU pragma: keep
-// # include <stdlib.h> // IWYU pragma: keep
 # include <stdbool.h>
-// # include <sys/socket.h>
+# include <bits/posix1_lim.h>
 # include <netinet/in.h>
+// # include <sys/socket.h>
+
 # include "ANSI-colors.h"
 # include "defines.h" // IWYU pragma: keep
 
 struct s_hosts {
-	char			host[255];
+	char			host[HOST_NAME_MAX + 1]; // + 1 for '\0'
 	struct in_addr		ip;
 	struct s_hosts		*next;
 };

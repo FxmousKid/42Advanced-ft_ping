@@ -1,7 +1,8 @@
 #ifndef DEFINES_H
+# define DEFINES_H
 
-#include <stdio.h> // IWYU pragma: keep
-#include "ANSI-colors.h"
+# include <stdio.h> // IWYU pragma: keep
+# include "ANSI-colors.h"
 
 # ifndef LIBFT_PATH
 #  define LIBFT_PATH "../libft/includes/libft.h"
@@ -40,7 +41,7 @@ Written by Iyan Nazarian.\n\
 # define ICMP_TYPE_ECHO_REPLY	0
 
 # define ICMP_CODE_ECHO_REQUEST 0
-# define ICMP_CODE_ECHO_REPLY 0
+# define ICMP_CODE_ECHO_REPLY   0
 
 # define IPV4_REGEX "[:number:]{3}"
 
