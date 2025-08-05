@@ -6,7 +6,7 @@
 #    By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 18:04:01 by inazaria          #+#    #+#              #
-#    Updated: 2025/08/04 18:28:57 by inazaria         ###   ########.fr        #
+#    Updated: 2025/08/05 18:36:25 by inazaria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC_FILES_NAMES += packet/packet_utils.c
 
 SRC_FILES_NAMES += utils/print_utils.c
 SRC_FILES_NAMES += utils/error.c
+SRC_FILES_NAMES += utils/utils.c
 
 
 # Full path to .c files
@@ -43,19 +44,20 @@ DEP_FILES = $(patsubst $(SRC_DIR)%.c, $(BUILD_DIR)%.d, $(SRC_FILES))
 #<><><><><><><> Variables <><><><><><><><><><><><><><><><><>
 
 NAME 	:= ft_ping
-CC 		:= cc
+CC 	:= cc
 CFLAGS 	:= -gdwarf-4 -Wall -Wextra -Werror -I $(INC_DIR) -MMD -MP
 LFLAGS 	:= libft/libft.a
 MKDIR 	:= mkdir -p
 RM_RF 	:= rm -rf
 ECHO  	:= echo -e
 
+PROJECT_VERSION := $(shell git describe --tags --always || echo "0.1")
 
 BLUE	:= $(shell echo -e "\033[34m") 
 BROWN	:= $(shell echo -e "\033[33m")
 GREEN	:= $(shell echo -e "\033[32m")
-RED		:= $(shell echo -e "\033[31m")
-NC		:= $(shell echo -e "\033[0m")
+RED	:= $(shell echo -e "\033[31m")
+NC	:= $(shell echo -e "\033[0m")
 
 #<><><><><><><> Recipes <><><><><><><><><><><><><><><><><><>
 

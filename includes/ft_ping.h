@@ -6,7 +6,7 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:55:48 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/05 13:34:59 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/05 21:06:45 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 # include <netinet/in.h>
 # include "ANSI-colors.h"
 # include "defines.h" // IWYU pragma: keep
+
+struct s_hosts {
+	char			host[255];
+	struct s_hosts		*next;
+};
 
 struct s_ping {
 	const char		*progname;
@@ -40,17 +45,24 @@ struct s_icmp_packet {
 	int16_t		seq_number;
 };
 
+// Parsing
 void	parse_cli(int argc, char *argv[], struct s_ping *data);
+bool	parse_hosts(struct s_ping *data, char *argv[]);
 
 // Utils
+bool	has_host(struct s_ping *data);
+
 void	print_help(const char *progname);
 void	print_info(struct s_ping *data);
+
 void	fatal(const char *msg);
 void	fatal_strerror(const char *msg);
-void	log_error(const char *msg, FILE *log);
 
 FILE	*get_logfile(void);
-void	close_logfile(void);
+void	log_error_strerror(const char *msg, FILE *log);
+void	log_fatal(const char *msg, FILE *log);
+void	log_close(void);
+void	log_error(const char *msg, FILE *log);
 
 
 #endif
