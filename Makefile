@@ -6,7 +6,7 @@
 #    By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 18:04:01 by inazaria          #+#    #+#              #
-#    Updated: 2025/08/05 18:36:25 by inazaria         ###   ########.fr        #
+#    Updated: 2025/08/05 21:27:05 by inazaria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ LIBFT_DIR 	= ./libft/
 SRC_FILES_NAMES = main.c
 
 SRC_FILES_NAMES += parser/parser.c
+SRC_FILES_NAMES += parser/parse_hosts.c
 
 SRC_FILES_NAMES += packet/packet_utils.c
 
