@@ -6,15 +6,17 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:31:43 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/04 18:31:47 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/04 20:13:53 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ping.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 static void ft_ping(struct s_ping *data)
 {
+	write(1, "\n", 1);
 	print_info(data);
 }
 
@@ -28,7 +30,7 @@ int main(int argc, char *argv[])
 	
 	if (argc < 2) {
 		ARG_MISSING(data.progname);
-		MORE_INFO_MSG(argv[0]);
+		MORE_INFO_MSG(argv[0])
 		exit(EXIT_BAD_ARGS);
 	}
 
