@@ -6,14 +6,16 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 18:21:34 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/04 18:24:55 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:46:13 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "defines.h"
 #include "ft_ping.h"
 #include <regex.h>
 #include <getopt.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include LIBFT_PATH
 
 static bool parse_host(struct s_ping *data, char *host)
@@ -40,13 +42,25 @@ bool opts_handle(struct option *lopts, int lopts_idx, char *argv[],
 	(void) lopts_idx;
 	(void) lopts;
 
+	int count = 0;
 	switch (opt) {
+
+	case 'c':
+		if (!optarg || (count = atoi(optarg)) <= 0) {
+			log_error("-c expects a count >= 0", get_logfile());
+			data->exit_code = EXIT_BAD_ARGS;
+			MORE_INFO_MSG(data->progname)
+			return false;
+		}
+		data->count_max = count;
+		break;
+
 	case '?':
 		// to distinguish between '-?' option and 
 		// getopt_long() returning '?' as a unknown opt
 		if (ft_strncmp(argv[optind - 1], "-?", 2)) {
 			data->exit_code = EXIT_BAD_ARGS;
-			MORE_INFO_MSG(data->progname);
+			MORE_INFO_MSG(data->progname)
 			return false;
 		}
 		__attribute__ ((fallthrough)); // fallthrough
@@ -72,11 +86,12 @@ bool opts_handle(struct option *lopts, int lopts_idx, char *argv[],
 void parse_cli(int argc, char *argv[], struct s_ping *data)
 {
 	int	opt;
-	char	*sopts = "+vV?";
+	char	*sopts = "+vV?c:";
 	int	lopts_idx = 0;
 
 	struct option lopts[] = {
 		{"help", no_argument, NULL, 'h'},
+		{"count", required_argument, NULL, 'c'},
 		{"version", no_argument, NULL, 'V'},
 		{NULL, 0, NULL, 0}
 	};
@@ -87,7 +102,6 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 			exit(data->exit_code);
 		opt = getopt_long(argc, argv, sopts, lopts, &lopts_idx);
 	}
-
 
 	if (!argv[optind]) {
 		ARG_MISSING(data->progname);

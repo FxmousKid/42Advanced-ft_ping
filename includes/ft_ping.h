@@ -6,7 +6,7 @@
 /*   By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:55:48 by inazaria          #+#    #+#             */
-/*   Updated: 2025/08/04 18:29:08 by inazaria         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:34:59 by inazaria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ struct s_ping {
 	char			*host;
 	int			socket;
 	struct sockaddr_in	ip;
+	int			count_max;
 
 };
 
