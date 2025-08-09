@@ -6,7 +6,7 @@
 #    By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 18:04:01 by inazaria          #+#    #+#              #
-#    Updated: 2025/08/05 22:33:08 by inazaria         ###   ########.fr        #
+#    Updated: 2025/08/10 21:17:08 by inazaria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,9 @@ BUILD_DIR 	= ./build/
 INC_DIR 	= ./includes/
 
 LIBFT_DIR 	= ./libft/
+
+DOCS 		= docs
+DOXYFILE 	= $(DOCS)/Doxyfile
 
 # .c files for source code SRC_FILES_NAMES = main.c
 SRC_FILES_NAMES = main.c
@@ -86,6 +89,14 @@ $(NAME) : $(OBJ_FILES)
 
 all : $(NAME) 
 
+docs:
+	@$(ECHO) "$(BROWN)[DOC] Generating documentation...$(NC)"
+	@doxygen $(DOXYFILE) > /dev/null
+	@rm -rf $(DOCS)/html/ $(DOCS)/latex/
+	@mv html latex $(DOCS)/
+	@$(ECHO) "$(GREEN)[DOC] Documentation generated successfully.$(NC)"
+	$(shell xdg-open ./$(DOCS)/html/index.html > /dev/null 2>&1 || true)
+
 clean : 
 	@$(ECHO) "$(BROWN)[CLN] Cleaning object and dependency files...$(NC)"
 	@$(RM) $(DEP_FILES) $(OBJ_FILES)
@@ -95,10 +106,13 @@ fclean :
 	@$(ECHO) "$(BROWN)[CLN] Cleaning Libft object and dependency files...$(NC)"
 	@$(MAKE) --no-print-directory -s -C $(LIBFT_DIR) fclean > /dev/null
 	@$(ECHO) "$(GREEN)[CLN] Libft Clean complete.$(NC)"
+	@$(ECHO) "$(BROWN)[CLN] Cleaning Doxygen generated documentation...$(NC)"
+	@$(RM_RF) $(DOCS)/html $(DOCS)/latex
+	@$(ECHO) "$(GREEN)[CLN] Documentation clean complete.$(NC)"
 	@$(ECHO) "$(BROWN)[CLN] Cleaning object, dependency files, and executable...$(NC)"
 	@$(RM_RF) $(BUILD_DIR) $(NAME)
 	@$(ECHO) "$(GREEN)[CLN] Clean complete.$(NC)"
 
 
 .DEFAULT_GOAL := all
-.PHONY : all clean fclean re
+.PHONY : all clean fclean re docs
