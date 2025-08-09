@@ -10,10 +10,22 @@
 # include "ANSI-colors.h"
 # include "defines.h" // IWYU pragma: keep
 
+struct s_stats {
+	int			sent; // packets sent
+	int			received; // packets received
+	int			lost; // packets lost
+	double			avg_time; // average time in ms
+	double			min_time; // min time in ms
+	double			max_time; // max time in ms
+	double			stddev_time; // standard deviation in ms
+};
+
 struct s_hosts {
-	char			host[HOST_NAME_MAX + 1]; // + 1 for '\0'
+	char			host[_POSIX_HOST_NAME_MAX + 1]; // + 1 for '\0'
+	struct s_stats		stats;
 	struct in_addr		ip;
 	struct s_hosts		*next;
+	size_t			host_idx;
 };
 
 struct s_ping {
@@ -45,6 +57,7 @@ bool	has_host(struct s_ping *data);
 
 void	print_help(const char *progname);
 void	print_info(struct s_ping *data);
+void	print_hosts_info(struct s_hosts *hosts);
 
 void	fatal(const char *msg);
 void	fatal_strerror(const char *msg);

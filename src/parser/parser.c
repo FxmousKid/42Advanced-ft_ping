@@ -76,7 +76,6 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 			exit(data->exit_code);
 
 		opt = getopt_long(argc, argv, sopts, lopts, &lopts_idx);
-
 	}
 
 	if (!argv[optind]) {

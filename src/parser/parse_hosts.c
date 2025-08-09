@@ -29,6 +29,7 @@ bool	parse_hosts(struct s_ping *data, char *argv[])
 			log_error("Host name is too long", get_logfile());
 			return false;
 		}
+		hosts->host_idx = tmp - optind - 1;
 		
 		// if hosts are left, to allocate, else do nothing
 		if (argv[tmp])
