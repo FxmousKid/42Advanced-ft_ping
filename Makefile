@@ -6,7 +6,7 @@
 #    By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 18:04:01 by inazaria          #+#    #+#              #
-#    Updated: 2025/08/10 21:17:08 by inazaria         ###   ########.fr        #
+#    Updated: 2025/08/10 23:01:19 by inazaria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ INC_DIR 	= ./includes/
 LIBFT_DIR 	= ./libft/
 
 DOCS 		= docs
+DOXYFILE_IN 	= $(DOCS)/Doxyfile.in
 DOXYFILE 	= $(DOCS)/Doxyfile
 
 # .c files for source code SRC_FILES_NAMES = main.c
@@ -56,7 +57,7 @@ MKDIR 	:= mkdir -p
 RM_RF 	:= rm -rf
 ECHO  	:= echo -e
 
-PROJECT_VERSION := $(shell git describe --tags --always || echo "0.1")
+PROJECT_VERSION := $(shell git describe --tags)
 
 BLUE	:= $(shell echo -e "\033[34m") 
 BROWN	:= $(shell echo -e "\033[33m")
@@ -82,7 +83,7 @@ $(NAME) : $(OBJ_FILES)
 	@$(ECHO) "$(BROWN)[BLD] Building libft static library...$(NC)"
 	@$(MAKE) --no-print-directory -s -C $(LIBFT_DIR) all
 	@$(ECHO) "$(GREEN)[BLD] successfully built libft.$(NC)"	
-
+	
 	@$(ECHO) "$(BROWN)[BLD] Building $(NAME) executable...$(NC)"
 	@$(CC) $^ -o $(NAME) $(LFLAGS)
 	@$(ECHO) "$(GREEN)[BLD] Executable built successfully.$(NC)"
@@ -91,6 +92,9 @@ all : $(NAME)
 
 docs:
 	@$(ECHO) "$(BROWN)[DOC] Generating documentation...$(NC)"
+
+	@sed 's/@PROJECT_VERSION@/$(PROJECT_VERSION)/' $(DOXYFILE_IN) > $(DOXYFILE)
+
 	@doxygen $(DOXYFILE) > /dev/null
 	@rm -rf $(DOCS)/html/ $(DOCS)/latex/
 	@mv html latex $(DOCS)/
@@ -108,6 +112,7 @@ fclean :
 	@$(ECHO) "$(GREEN)[CLN] Libft Clean complete.$(NC)"
 	@$(ECHO) "$(BROWN)[CLN] Cleaning Doxygen generated documentation...$(NC)"
 	@$(RM_RF) $(DOCS)/html $(DOCS)/latex
+	@$(RM_RF) $(DOXYFILE)
 	@$(ECHO) "$(GREEN)[CLN] Documentation clean complete.$(NC)"
 	@$(ECHO) "$(BROWN)[CLN] Cleaning object, dependency files, and executable...$(NC)"
 	@$(RM_RF) $(BUILD_DIR) $(NAME)
