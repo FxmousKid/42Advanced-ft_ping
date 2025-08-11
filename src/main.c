@@ -1,3 +1,4 @@
+
 /**
  * @file main.c
  * @brief main() file
@@ -23,10 +24,7 @@
  */
 static void ft_ping(struct s_ping *data)
 {
-	write(1, "\n", 1);
-	print_info(data);
-	write(1, "\n", 1);
-	print_hosts_info(data->hosts);
+	inet_setup(data);
 }
 
 /** @brief GLIBC var that contains the executable name. */

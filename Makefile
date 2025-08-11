@@ -6,7 +6,7 @@
 #    By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 18:04:01 by inazaria          #+#    #+#              #
-#    Updated: 2025/08/10 23:01:19 by inazaria         ###   ########.fr        #
+#    Updated: 2025/08/11 23:15:08 by inazaria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ DOXYFILE 	= $(DOCS)/Doxyfile
 
 # .c files for source code SRC_FILES_NAMES = main.c
 SRC_FILES_NAMES = main.c
+SRC_FILES_NAMES += inet_setup.c
 
 SRC_FILES_NAMES += parser/parser.c
 SRC_FILES_NAMES += parser/parse_hosts.c
@@ -34,6 +35,7 @@ SRC_FILES_NAMES += packet/packet_utils.c
 
 SRC_FILES_NAMES += utils/print_utils.c
 SRC_FILES_NAMES += utils/error.c
+SRC_FILES_NAMES += utils/logfile.c
 SRC_FILES_NAMES += utils/utils.c
 
 
@@ -117,7 +119,6 @@ fclean :
 	@$(ECHO) "$(BROWN)[CLN] Cleaning object, dependency files, and executable...$(NC)"
 	@$(RM_RF) $(BUILD_DIR) $(NAME)
 	@$(ECHO) "$(GREEN)[CLN] Clean complete.$(NC)"
-
 
 .DEFAULT_GOAL := all
 .PHONY : all clean fclean re docs

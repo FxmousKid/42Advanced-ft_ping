@@ -35,7 +35,7 @@ bool	parse_hosts(struct s_ping *data, char *argv[])
 		if (argv[tmp])
 			hosts->next = calloc(1, sizeof(struct s_hosts));
 		if (argv[tmp] && !hosts->next) {
-			log_error_strerror("Failed to allocate hosts", get_logfile());
+			log_strerror("Failed to allocate hosts", get_logfile());
 			return (false);
 		}
 		hosts = hosts->next;
