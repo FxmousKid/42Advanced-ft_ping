@@ -27,5 +27,5 @@ this command will then open your default browser and greet you with extensive do
 the ability to view sources, navigate along the file tree, etc...
 
 > [!WARNING]
-> 1] ```doxygen``` needs to be installed on your machine first.
+> 1] ```doxygen``` needs to be installed on your machine first.\n
 > 2] if ```make docs``` doesn't open the browser, try it again
