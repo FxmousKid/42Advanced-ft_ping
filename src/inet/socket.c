@@ -1,14 +1,14 @@
 /**
- * @file inet_setup.c
- * @brief setup functions for internet comms, like socket, ...
+ * @file socket.c
+ * @brief socket related files
  * @ingroup 
  *
  * @author Iyan Nazarian
- * @date 2025-08-10
- * @version v0.1.0-1-g927c91f
+ * @date 2025-08-17
+ * @version v0.1.0-3-g410a714
  *
  * @details
- *  Socket creation via the socket(2) syscall 
+ *  Contains socket related functions : get_socket(),...
  */
 
 #include <netinet/in.h>
@@ -16,7 +16,6 @@
 #include "ft_ping.h"
 
 int	close(int fd);
-int	atexit(void (*f)(void));
 
 /**
  * @brief creates the socket via socket(2) and returns it, if already created
@@ -38,28 +37,11 @@ int	get_socket_icmp(void)
 		log_strerror("socket() failed", get_logfile());	
 		fatal_error("socket() failed");
 	}
-
+	
 	return sockfd;
 }
 
 void	close_socket_icmp(void)
 {
 	close(get_socket_icmp());
-}
-
-/**
- * @brief function for setting up internet communications
- *
- * @param data	ptr to main context structure
- *
- * @return
- *  @retval true upon success
- *  @retval false upon failure
- */
-bool	inet_setup(struct s_ping *data)
-{
-	data->socket = get_socket_icmp();
-	log_success("Socket created", get_logfile());
-	atexit(close_socket_icmp);
-	return true;
 }

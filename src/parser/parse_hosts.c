@@ -3,8 +3,6 @@
 #include <getopt.h>
 #include LIBFT_PATH
 
-char *strcpy(char *dst, const char *src);
-
 bool	parse_hosts(struct s_ping *data, char *argv[])
 {
 	(void) argv;
