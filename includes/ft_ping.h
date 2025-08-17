@@ -69,13 +69,12 @@ struct s_ping {
 };
 
 
-struct s_icmp_packet {
-	
-	int8_t		type;
-	int8_t		code;
-	int16_t		checksum;
-	int16_t		identifier;
-	int16_t		seq_number;
+struct s_icmp_packet {	
+	uint8_t		type;
+	uint8_t		code;
+	uint16_t	checksum;
+	uint16_t	identifier;
+	uint16_t	seq_number;
 };
 
 // Parsing
