@@ -46,6 +46,7 @@ void print_info(struct s_ping *data)
 	printf("%s%-*s%s%s\n", YEL, pad_width, "Verbose:", WHT,
 		data->is_verbose ? "enabled" : "disabled");
 	printf("%s%-*s%s%d\n", YEL, pad_width, "Count:", WHT, data->count_max);
+	printf("%s%-*s%s%d\n", YEL, pad_width, "Interval:", WHT, data->interval);
 
 	printf("%s=============================%s\n", YEL, WHT);
 	fflush(stdout);

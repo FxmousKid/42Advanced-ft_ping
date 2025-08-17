@@ -57,17 +57,25 @@ struct s_hosts {
 	struct in_addr		ip;
 	struct s_hosts		*next;
 	size_t			host_idx;
+	/** @brief true if the resume of that host has been printed, 
+	 * false instead. */
+	bool			resumed;
 };
 
 struct s_ping {
 	int			socket; // socket fd
 	int			count_max; // CLI option -c [count_max]
 	bool			is_verbose; // CLI option -v presence or not
+	/** @brief number of SECONDS before each ping. 
+	* @details negative input will result in error*/
+	int			interval;
 	short			exit_code;
 	const char		*progname; // for error msgs
 	struct s_hosts		*hosts;
 };
 
+
+# pragma pack(0)
 
 struct s_icmp_packet {	
 	uint8_t		type;
@@ -75,7 +83,9 @@ struct s_icmp_packet {
 	uint16_t	checksum;
 	uint16_t	identifier;
 	uint16_t	seq_number;
-};
+} __attribute__((packed)) ;
+
+# pragma pack()
 
 // Parsing
 
