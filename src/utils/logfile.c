@@ -23,7 +23,6 @@ FILE	*get_logfile(void)
 		logfile = fopen(LOGFILE_NAME, "w");
 
 	if (!logfile) {
-		log_strerror("Log file creation", get_logfile());
 		fatal_strerror("Log file creation");
 	}
 
