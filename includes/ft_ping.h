@@ -65,6 +65,8 @@ struct s_hosts {
 struct s_ping {
 	int			socket; // socket fd
 	int			count_max; // CLI option -c [count_max]
+	/** @brief if -d then finish parsing, print debug, and exits. */
+	bool			debug; // CLI option -d presence or not
 	bool			is_verbose; // CLI option -v presence or not
 	/** @brief number of SECONDS before each ping. 
 	* @details negative input will result in error*/

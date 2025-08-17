@@ -107,6 +107,9 @@ bool opts_handle(struct option *lopts, int lopts_idx, char *argv[],
 	case 'V':
 		printf(VERSION);
 		return false;	
+	case 'd':
+		data->debug = true;
+		break;
 	case 'v':
 		data->is_verbose = true;
 		break;
@@ -127,8 +130,9 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 	*	-V : shows version then exits
 	*	-? : shows help then exits
 	*	-c : requires NUMBER arg to send NUMBER packets per host
-	*	-i : require NUMBER arg to wait NUMBER seconds for each ping*/
-	char	*sopts = "vV?c:i:";
+	*	-i : require NUMBER arg to wait NUMBER seconds for each ping
+	*	-d : print parsing debug information after parsing hosts, then exits*/
+	char	*sopts = "vV?c:i:d";
 	int	lopts_idx = 0;
 
 	struct option lopts[] = {
@@ -136,6 +140,7 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 		{"count", required_argument, NULL, 'c'},
 		{"version", no_argument, NULL, 'V'},
 		{"interval", required_argument, NULL, 'i'},
+		{"debug", no_argument, NULL, 'd'},
 		{NULL, 0, NULL, 0}
 	};
 
@@ -158,4 +163,10 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 	// and should there be all parsed
 	if (!parse_hosts(data, argv))
 		log_fatal("Failed to parse hosts", get_logfile());
+
+	// if -d was passed
+	if (data->debug) {
+		print_debug(data);
+		exit(EXIT_SUCCESS);
+	}
 }

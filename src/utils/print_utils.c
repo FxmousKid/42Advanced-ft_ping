@@ -8,9 +8,11 @@ Send ICMP ECHO_REQUEST packets to network hosts.\n\
 Options valid for all request types:\n\
 \n\
  -c, --count=NUMBER	stop after sending NUMBER packets\n\
+ -i, --interval=NUMBER	wait NUMBER seconds between sending each packet\n\
 \n\
  -?, --help		give this help list\n\
  -V, --version		print version information\n\
+ -d, --debug		print parsing debug information after parsing hosts, then exits\n\
 \n\
 Mandatory or optional arguments to long options are also mandatory or optional\n\
 for any corresponding short options.\n\
