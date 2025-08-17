@@ -1,3 +1,16 @@
+/**
+ * @file packet_utils.c
+ * @brief utilities for packet (ICMP)
+ * @ingroup
+ *
+ * @author Iyan Nazarian
+ * @date 2025-08-17
+ * @version v0.1.0-6-g4412147
+ *
+ * @details
+ *  Contains functions related to packets (ICMP)
+ */
+
 #include "ft_ping.h"
 
 struct s_icmp_packet make_packet(struct s_ping *data)

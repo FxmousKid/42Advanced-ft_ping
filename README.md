@@ -26,6 +26,6 @@ inside of them, and a template Doxyfile.in which gets built using ```make docs``
 this command will then open your default browser and greet you with extensive documentation,
 the ability to view sources, navigate along the file tree, etc...
 
-> [!NOTICE]
+> [!WARNING]
 > 1] ```doxygen``` needs to be installed on your machine first.
 > 2] if ```make docs``` doesn't open the browser, try it again

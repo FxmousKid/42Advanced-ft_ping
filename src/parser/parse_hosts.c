@@ -1,3 +1,17 @@
+/**
+ * @file parse_hosts.c
+ * @brief parses hosts given in argv
+ * @ingroup parsing
+ *
+ * @author Iyan Nazarian
+ * @date 2025-08-17
+ * @version v0.1.0-6-g4412147
+ *
+ * @details
+ *  contains the parse_hosts() function to parse the host(s) given
+ *  via argv
+ */
+
 #include "ft_ping.h"
 #include <regex.h>
 #include <getopt.h>
