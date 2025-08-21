@@ -6,7 +6,7 @@
 #    By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 18:04:01 by inazaria          #+#    #+#              #
-#    Updated: 2025/08/18 00:06:26 by inazaria         ###   ########.fr        #
+#    Updated: 2025/08/21 23:20:48 by inazaria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ LIBFT_DIR 	= ./libft/
 DOCS_DIR 			= docs
 DOXYFILE_IN 		= $(DOCS_DIR)/Doxyfile.in
 DOXYFILE 		= $(DOCS_DIR)/Doxyfile
-DOXYGEN_THEME_DIR	= $(DOCS_DIR)/Doxygen-theme
 
 # .c files for source code SRC_FILES_NAMES = main.c
 SRC_FILES_NAMES = main.c
@@ -101,7 +100,6 @@ docs:
 	@sed \
 		-e "s|@DOCS_DIR@|$(DOCS_DIR)|" \
 		-e "s|@PROJECT_VERSION@|$(PROJECT_VERSION)|" \
-		-e "s|@DOXYGEN_THEME_DIR@|$(DOXYGEN_THEME_DIR)|" \
 	$(DOXYFILE_IN) > $(DOXYFILE)
 
 	@doxygen $(DOXYFILE) > /dev/null
