@@ -8,9 +8,11 @@ Send ICMP ECHO_REQUEST packets to network hosts.\n\
 Options valid for all request types:\n\
 \n\
  -c, --count=NUMBER	stop after sending NUMBER packets\n\
+ -i, --interval=NUMBER	wait NUMBER seconds between sending each packet\n\
 \n\
  -?, --help		give this help list\n\
  -V, --version		print version information\n\
+ -d, --debug		print parsing debug information after parsing hosts, then exits\n\
 \n\
 Mandatory or optional arguments to long options are also mandatory or optional\n\
 for any corresponding short options.\n\
@@ -46,6 +48,7 @@ void print_info(struct s_ping *data)
 	printf("%s%-*s%s%s\n", YEL, pad_width, "Verbose:", WHT,
 		data->is_verbose ? "enabled" : "disabled");
 	printf("%s%-*s%s%d\n", YEL, pad_width, "Count:", WHT, data->count_max);
+	printf("%s%-*s%s%d\n", YEL, pad_width, "Interval:", WHT, data->interval);
 
 	printf("%s=============================%s\n", YEL, WHT);
 	fflush(stdout);

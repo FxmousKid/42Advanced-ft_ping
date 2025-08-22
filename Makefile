@@ -6,7 +6,7 @@
 #    By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 18:04:01 by inazaria          #+#    #+#              #
-#    Updated: 2025/08/10 23:01:19 by inazaria         ###   ########.fr        #
+#    Updated: 2025/08/21 23:20:48 by inazaria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,12 +19,15 @@ INC_DIR 	= ./includes/
 
 LIBFT_DIR 	= ./libft/
 
-DOCS 		= docs
-DOXYFILE_IN 	= $(DOCS)/Doxyfile.in
-DOXYFILE 	= $(DOCS)/Doxyfile
+DOCS_DIR 			= docs
+DOXYFILE_IN 		= $(DOCS_DIR)/Doxyfile.in
+DOXYFILE 		= $(DOCS_DIR)/Doxyfile
 
 # .c files for source code SRC_FILES_NAMES = main.c
 SRC_FILES_NAMES = main.c
+
+SRC_FILES_NAMES += inet/inet_setup.c
+SRC_FILES_NAMES += inet/socket.c
 
 SRC_FILES_NAMES += parser/parser.c
 SRC_FILES_NAMES += parser/parse_hosts.c
@@ -34,6 +37,7 @@ SRC_FILES_NAMES += packet/packet_utils.c
 
 SRC_FILES_NAMES += utils/print_utils.c
 SRC_FILES_NAMES += utils/error.c
+SRC_FILES_NAMES += utils/logfile.c
 SRC_FILES_NAMES += utils/utils.c
 
 
@@ -93,13 +97,16 @@ all : $(NAME)
 docs:
 	@$(ECHO) "$(BROWN)[DOC] Generating documentation...$(NC)"
 
-	@sed 's/@PROJECT_VERSION@/$(PROJECT_VERSION)/' $(DOXYFILE_IN) > $(DOXYFILE)
+	@sed \
+		-e "s|@DOCS_DIR@|$(DOCS_DIR)|" \
+		-e "s|@PROJECT_VERSION@|$(PROJECT_VERSION)|" \
+	$(DOXYFILE_IN) > $(DOXYFILE)
 
 	@doxygen $(DOXYFILE) > /dev/null
-	@rm -rf $(DOCS)/html/ $(DOCS)/latex/
-	@mv html latex $(DOCS)/
+	@rm -rf $(DOCS_DIR)/html/ $(DOCS_DIR)/latex/
+	@mv html latex $(DOCS_DIR)/
 	@$(ECHO) "$(GREEN)[DOC] Documentation generated successfully.$(NC)"
-	$(shell xdg-open ./$(DOCS)/html/index.html > /dev/null 2>&1 || true)
+	$(shell xdg-open ./$(DOCS_DIR)/html/index.html > /dev/null 2>&1 || true)
 
 clean : 
 	@$(ECHO) "$(BROWN)[CLN] Cleaning object and dependency files...$(NC)"
@@ -111,13 +118,12 @@ fclean :
 	@$(MAKE) --no-print-directory -s -C $(LIBFT_DIR) fclean > /dev/null
 	@$(ECHO) "$(GREEN)[CLN] Libft Clean complete.$(NC)"
 	@$(ECHO) "$(BROWN)[CLN] Cleaning Doxygen generated documentation...$(NC)"
-	@$(RM_RF) $(DOCS)/html $(DOCS)/latex
+	@$(RM_RF) $(DOCS_DIR)/html $(DOCS_DIR)/latex
 	@$(RM_RF) $(DOXYFILE)
 	@$(ECHO) "$(GREEN)[CLN] Documentation clean complete.$(NC)"
 	@$(ECHO) "$(BROWN)[CLN] Cleaning object, dependency files, and executable...$(NC)"
 	@$(RM_RF) $(BUILD_DIR) $(NAME)
 	@$(ECHO) "$(GREEN)[CLN] Clean complete.$(NC)"
-
 
 .DEFAULT_GOAL := all
 .PHONY : all clean fclean re docs

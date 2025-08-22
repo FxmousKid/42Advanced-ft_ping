@@ -1,9 +1,21 @@
+/**
+ * @file parse_hosts.c
+ * @brief parses hosts given in argv
+ * @ingroup parsing
+ *
+ * @author Iyan Nazarian
+ * @date 2025-08-17
+ * @version v0.1.0-6-g4412147
+ *
+ * @details
+ *  contains the parse_hosts() function to parse the host(s) given
+ *  via argv
+ */
+
 #include "ft_ping.h"
 #include <regex.h>
 #include <getopt.h>
 #include LIBFT_PATH
-
-char *strcpy(char *dst, const char *src);
 
 bool	parse_hosts(struct s_ping *data, char *argv[])
 {
@@ -35,7 +47,7 @@ bool	parse_hosts(struct s_ping *data, char *argv[])
 		if (argv[tmp])
 			hosts->next = calloc(1, sizeof(struct s_hosts));
 		if (argv[tmp] && !hosts->next) {
-			log_error_strerror("Failed to allocate hosts", get_logfile());
+			log_strerror("Failed to allocate hosts", get_logfile());
 			return (false);
 		}
 		hosts = hosts->next;
