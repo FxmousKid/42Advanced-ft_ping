@@ -38,10 +38,8 @@ bool	set_socket_options(struct s_ping *data)
 			sizeof(i)
 		);	
 		if (status)
-			//TODO: to add new logging here
-			log_strerror("failed setsockopt()", get_logfile());
+			log_event(LOG_ERROR, get_logfile(), 1, "setsockopt()");
 	}
-
 	return (status == 0);
 }
 
@@ -58,17 +56,12 @@ bool	inet_setup(struct s_ping *data)
 {
 	data->socket = get_socket_icmp();
 	atexit(close_socket_icmp);
-	// TODO: to add new logging here
-	log_success("Socket created", get_logfile());
+	log_event(LOG_SUCC, get_logfile(), 0, "Successfully created socket = %d", data->socket);
 
 	if (!set_socket_options(data)) {
-		//TODO: to add new logging here
-		log_error("Failed to set socket options", get_logfile());
+		log_event(LOG_ERROR, 0, get_logfile(), "Failed to set socket options");
 		fatal_error("Failed to set socket options");
 	}
 
-
-
-		
 	return true;
 }

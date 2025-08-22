@@ -142,23 +142,11 @@ _Noreturn void	fatal_strerror(const char *msg);
 /** @brief returns the FILE ptr for the logfile. 
  *  @details assumes log_close() has not been called*/
 FILE	*get_logfile(void);
-/** @brief logs the given error message in the given file. */
-void	log_error(const char *msg, FILE *log);
-/** @brief same as log_error() buts adds strerror(3) output. */
-void	log_strerror(const char *msg, FILE *log);
-/** @brief logs the given successful event message in the given file. */
-void	log_success(const char *msg, FILE *log);
-
-// FIX: check
-/** @brief logs the given event message in the given file. */
-// void	log_event(const char *msg, FILE *log);
-void	log_event(int level, FILE *file, const char *fmt, ...);
-
+/** @brief logs the given variadic event message in the given file, based
+ * on the given log level. */
+void	log_event(int level, FILE *file, bool is_errno, const char *fmt, ...)
+	__attribute__((format(printf, 4, 5)));
 /** @brief calls log_error() then calls fatal(). */
-void	log_fatal(const char *msg, FILE *log);
-/** @brief calls fclose(3) on the logfile.
- * @details should never be called manually, should be called by exit(2)
- * by registering it with atexit(3)*/
 void	log_close(void);
 
 // inet stuff

@@ -169,13 +169,13 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 	// all non option arguments are considered hosts
 	// and should there be all parsed
 	if (!parse_hosts(data, argv))
-		log_fatal("Failed to parse hosts", get_logfile());
+		log_event(LOG_ERROR, get_logfile(), 0, "Failed to parse hosts");
 
 	// if -d was passed
 	if (data->debug) {
 		print_debug(data);
 		exit(EXIT_SUCCESS);
 	}
-	log_event(LOG_EVENT, get_logfile(), "Parsing is done : status below");
+	log_event(LOG_EVENT, get_logfile(), 0, "Parsing is done : status below");
 	print_info(get_logfile(), data);
 }

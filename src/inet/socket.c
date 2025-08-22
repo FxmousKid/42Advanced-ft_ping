@@ -34,8 +34,8 @@ int	get_socket_icmp(void)
 		sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 
 	if (sockfd < 0) {
-		log_strerror("socket() failed", get_logfile());	
-		fatal_error("socket() failed");
+		log_event(LOG_ERROR, get_logfile(), 1, "socket() failed, ret = %d", sockfd);
+		fatal_error("Failed to create socket");
 	}
 	
 	return sockfd;
