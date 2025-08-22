@@ -23,6 +23,9 @@
 # include "ANSI-colors.h"
 # include "defines.h" // IWYU pragma: keep
 
+void	exit(int status);
+int	atexit(void (*f)(void));
+
 /**
  * @struct s_stats
  * @brief stores the statistics related to packet operations 
@@ -70,7 +73,7 @@ struct s_ping {
 	bool			is_verbose; // CLI option -v presence or not
 	/** @brief number of SECONDS before each ping. 
 	* @details negative input will result in error*/
-	int			interval;
+	struct timeval		interval;
 	short			exit_code;
 	const char		*progname; // for error msgs
 	struct s_hosts		*hosts;
