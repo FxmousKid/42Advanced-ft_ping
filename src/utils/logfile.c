@@ -35,6 +35,15 @@ void	log_close(void)
 	fclose(get_logfile());
 }
 
+
+/**
+ * @brief log an event to the logfile
+ *
+ * @param level the log level (format differences), a macro
+ * @param file the FILE * to log the content into
+ * @param is_errno to call or not strerror() in log
+ * @param fmt the variadic print-like format
+ */
 void	log_event(int level, FILE *file, bool is_errno, const char *fmt, ...)
 {
 	va_list ap;
