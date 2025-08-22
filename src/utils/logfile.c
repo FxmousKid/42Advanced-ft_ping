@@ -14,6 +14,7 @@
 #include "ft_ping.h"
 #include <errno.h>
 #include <string.h>
+#include <stdarg.h>
 
 FILE	*get_logfile(void)
 {
@@ -44,10 +45,10 @@ void	log_success(const char *msg, FILE *log)
 	fprintf(log, "%s[SUCES] %s%s\n", GRN, msg, WHT);
 }
 
-void	log_event(const char *msg, FILE *log)
-{
-	fprintf(log, "%s[EVENT] %s%s\n", YEL, msg, WHT);
-}
+// void	log_event(const char *msg, FILE *log)
+// {
+// 	fprintf(log, "%s[EVENT] %s%s\n", YEL, msg, WHT);
+// }
 
 void	log_strerror(const char *msg, FILE *log)
 {
@@ -59,4 +60,36 @@ void	log_fatal(const char *msg, FILE *log)
 {
 	log_error(msg, log);
 	fatal_error(msg);
+}
+
+void	log_event(int level, FILE *file, const char *fmt, ...)
+{
+	va_list ap;
+	va_start(ap, fmt);
+
+	switch (level) {
+	case LOG_SUCC:
+		fprintf(file, "%s[SUCES] ", GRN);
+		vfprintf(file, fmt, ap);
+		fprintf(file, "%s", WHT);
+		break;
+	case LOG_EVENT:
+		fprintf(file, "%s[EVENT] ", WHT);
+		vfprintf(file, fmt, ap);
+		fprintf(file, "%s", WHT);
+		break;
+	case LOG_WARN:
+		fprintf(file, "%s[WARN ] ", YEL);
+		vfprintf(file, fmt, ap);
+		fprintf(file, "%s", WHT);
+		break;
+	case LOG_ERROR:
+		fprintf(file, "%s[FATAL] ", RED);
+		vfprintf(file, fmt, ap);
+		if (errno)
+			fprintf(file, ": %s%s", strerror(errno), WHT);
+	}
+	fprintf(file, "\n");
+	fflush(file);
+	va_end(ap);	
 }

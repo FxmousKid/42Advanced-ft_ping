@@ -127,9 +127,9 @@ void	print_debug(struct s_ping *data);
 /** @brief print usage guide for ft_ping. */
 void	print_help(const char *progname);
 /** @brief prints info regarding the main context structure. */
-void	print_info(struct s_ping *data);
+void	print_info(FILE *file, struct s_ping *data);
 /** @brief prints info about parsed hosts and their packet stats. */
-void	print_hosts_info(struct s_hosts *hosts);
+void	print_hosts_info(FILE *file, struct s_hosts *hosts);
 /** @brief exits with the appropriate exit value : EXIT_OTHER. */
 _Noreturn void	fatal(void);
 /** @brief prints error msg to stderr then calls fatal() . */
@@ -148,8 +148,12 @@ void	log_error(const char *msg, FILE *log);
 void	log_strerror(const char *msg, FILE *log);
 /** @brief logs the given successful event message in the given file. */
 void	log_success(const char *msg, FILE *log);
+
+// FIX: check
 /** @brief logs the given event message in the given file. */
-void	log_event(const char *msg, FILE *log);
+// void	log_event(const char *msg, FILE *log);
+void	log_event(int level, FILE *file, const char *fmt, ...);
+
 /** @brief calls log_error() then calls fatal(). */
 void	log_fatal(const char *msg, FILE *log);
 /** @brief calls fclose(3) on the logfile.

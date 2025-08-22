@@ -22,8 +22,12 @@
 # define OPT_LONG_INV(name,opt)		fprintf(stderr, "%s: unrecognized option -- '%s'\n", (name), (opt));
 # define MORE_INFO_MSG(name)		fprintf(stderr, "Try '%s --help' for more information.\n", (name));
 
+// logging
 # define LOGFILE_NAME	"logfile.txt"
-// # define LOGFILE_NAME	""
+# define LOG_SUCC	3
+# define LOG_EVENT	2
+# define LOG_WARN	1
+# define LOG_ERROR	0
 
 	
 
@@ -48,5 +52,7 @@ Written by Iyan Nazarian.\n\
 
 # define PACKET_PAYLOAD "TEST"
 # define PACKET_PAYLOAD_SIZE sizeof(PACKET_PAYLOAD)
+
+
 
 #endif
