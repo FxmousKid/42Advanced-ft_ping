@@ -176,4 +176,6 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 		print_debug(data);
 		exit(EXIT_SUCCESS);
 	}
+	log_event(LOG_EVENT, get_logfile(), "Parsing is done : status below");
+	print_info(get_logfile(), data);
 }

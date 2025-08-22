@@ -10,7 +10,7 @@ bool	has_host(struct s_ping *data)
 void	print_debug(struct s_ping *data)
 {
 	write(1, "\n", 1);
-	print_info(data);
+	print_info(stdout, data);
 	write(1, "\n", 1);
-	print_hosts_info(data->hosts);
+	print_hosts_info(stdout, data->hosts);
 }
