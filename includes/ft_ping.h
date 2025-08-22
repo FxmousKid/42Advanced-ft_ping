@@ -85,6 +85,7 @@ struct s_icmp_packet {
 	uint16_t	checksum;
 	uint16_t	identifier;
 	uint16_t	seq_number;
+	uint8_t		payload[PACKET_PAYLOAD_SIZE];
 } __attribute__((packed)) ;
 
 # pragma pack()
@@ -165,5 +166,7 @@ void	close_socket_icmp(void);
 /** @brief creates and allocates the internet stuff
  * @details creates and allocates the ICMP socket.  */
 bool	inet_setup(struct s_ping *data);
+/** @brief returns a correct ICMP packet based on arguments. */
+struct s_icmp_packet make_packet(struct s_ping *data, bool is_req);
 
 #endif

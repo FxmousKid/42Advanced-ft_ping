@@ -36,6 +36,7 @@ Written by Iyan Nazarian.\n\
 "
 
 // Networking
+# define ICMP_HEADER_LEN 8 
 
 # define ICMP_TYPE_ECHO_REQUEST	8
 # define ICMP_TYPE_ECHO_REPLY	0
@@ -44,5 +45,8 @@ Written by Iyan Nazarian.\n\
 # define ICMP_CODE_ECHO_REPLY   0
 
 # define IPV4_REGEX "[:number:]{3}"
+
+# define PACKET_PAYLOAD "TEST"
+# define PACKET_PAYLOAD_SIZE sizeof(PACKET_PAYLOAD)
 
 #endif

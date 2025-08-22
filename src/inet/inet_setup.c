@@ -32,7 +32,8 @@ bool	inet_setup(struct s_ping *data)
 	atexit(close_socket_icmp);
 	log_success("Socket created", get_logfile());
 
-	
+	struct s_icmp_packet pack = make_packet(data, true);
+	printf("checksum = %d\n", pack.checksum);
 	
 	return true;
 }
