@@ -23,6 +23,9 @@
 # include "ANSI-colors.h"
 # include "defines.h" // IWYU pragma: keep
 
+void	exit(int status);
+int	atexit(void (*f)(void));
+
 /**
  * @struct s_stats
  * @brief stores the statistics related to packet operations 
@@ -70,7 +73,7 @@ struct s_ping {
 	bool			is_verbose; // CLI option -v presence or not
 	/** @brief number of SECONDS before each ping. 
 	* @details negative input will result in error*/
-	int			interval;
+	struct timeval		interval;
 	short			exit_code;
 	const char		*progname; // for error msgs
 	struct s_hosts		*hosts;
@@ -85,6 +88,7 @@ struct s_icmp_packet {
 	uint16_t	checksum;
 	uint16_t	identifier;
 	uint16_t	seq_number;
+	uint8_t		payload[PACKET_PAYLOAD_SIZE];
 } __attribute__((packed)) ;
 
 # pragma pack()
@@ -123,12 +127,12 @@ void	print_debug(struct s_ping *data);
 /** @brief print usage guide for ft_ping. */
 void	print_help(const char *progname);
 /** @brief prints info regarding the main context structure. */
-void	print_info(struct s_ping *data);
+void	print_info(FILE *file, struct s_ping *data);
 /** @brief prints info about parsed hosts and their packet stats. */
-void	print_hosts_info(struct s_hosts *hosts);
+void	print_hosts_info(FILE *file, struct s_hosts *hosts);
 /** @brief exits with the appropriate exit value : EXIT_OTHER. */
 _Noreturn void	fatal(void);
-/** @brief prints error msg to stderr then calls fatal() . */
+/** @brbeta ief prints error msg to stderr then calls fatal() . */
 _Noreturn void	fatal_error(const char *msg);
 /** @brief same as fatal_error() but also prints errno-associated message. */
 _Noreturn void	fatal_strerror(const char *msg);
@@ -138,19 +142,11 @@ _Noreturn void	fatal_strerror(const char *msg);
 /** @brief returns the FILE ptr for the logfile. 
  *  @details assumes log_close() has not been called*/
 FILE	*get_logfile(void);
-/** @brief logs the given error message in the given file. */
-void	log_error(const char *msg, FILE *log);
-/** @brief same as log_error() buts adds strerror(3) output. */
-void	log_strerror(const char *msg, FILE *log);
-/** @brief logs the given successful event message in the given file. */
-void	log_success(const char *msg, FILE *log);
-/** @brief logs the given event message in the given file. */
-void	log_event(const char *msg, FILE *log);
+/** @brief logs the given variadic event message in the given file, based
+ * on the given log level. */
+void	log_event(int level, FILE *file, bool is_errno, const char *fmt, ...)
+	__attribute__((format(printf, 4, 5)));
 /** @brief calls log_error() then calls fatal(). */
-void	log_fatal(const char *msg, FILE *log);
-/** @brief calls fclose(3) on the logfile.
- * @details should never be called manually, should be called by exit(2)
- * by registering it with atexit(3)*/
 void	log_close(void);
 
 // inet stuff
@@ -165,5 +161,7 @@ void	close_socket_icmp(void);
 /** @brief creates and allocates the internet stuff
  * @details creates and allocates the ICMP socket.  */
 bool	inet_setup(struct s_ping *data);
+/** @brief returns a correct ICMP packet based on arguments. */
+struct s_icmp_packet make_packet(struct s_ping *data, bool is_req);
 
 #endif

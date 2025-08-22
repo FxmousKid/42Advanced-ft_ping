@@ -89,7 +89,8 @@ bool opts_handle(struct option *lopts, int lopts_idx, char *argv[],
 			opts_error(data, "-i expects a number > 0, got : %d\n", arg);
 			return false;
 		}
-		data->interval = arg;
+		data->interval.tv_sec = arg;
+		data->interval.tv_usec = 0;
 		break;
 
 	case '?':
@@ -117,10 +118,16 @@ bool opts_handle(struct option *lopts, int lopts_idx, char *argv[],
 	return true;
 }
 
-/* Parsing should not allocate anything, since it can exit
- * */
-
-
+/**
+ * @brief parses the given argv for options and arguments supported
+ *
+ * @param argc number of arguments
+ * @param argv stores the arguments
+ * @param data main context structure pointer
+ *
+ * @note function doesn't return since it either exits on failure,
+ * or continues since there was no issue. like a guard clause per se.
+ */
 void parse_cli(int argc, char *argv[], struct s_ping *data)
 {
 	int	opt;
@@ -162,11 +169,13 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 	// all non option arguments are considered hosts
 	// and should there be all parsed
 	if (!parse_hosts(data, argv))
-		log_fatal("Failed to parse hosts", get_logfile());
+		log_event(LOG_ERROR, get_logfile(), 0, "Failed to parse hosts");
 
 	// if -d was passed
 	if (data->debug) {
 		print_debug(data);
 		exit(EXIT_SUCCESS);
 	}
+	log_event(LOG_EVENT, get_logfile(), 0, "Parsing is done : status below");
+	print_info(get_logfile(), data);
 }

@@ -26,36 +26,35 @@ Report bugs on https://www.github.com/FxmousKid/42Advanced-ft_ping\n\
 
 size_t strlen(const char *str);
 
-void print_info(struct s_ping *data)
+void	print_info(FILE *file, struct s_ping *data)
 {
 
 	const int pad_width = 10;
 	struct s_hosts *hosts = data->hosts;
 
-	printf("%s=========== STATS ===========%s\n", YEL, WHT);
+	fprintf(file, "%s=========== STATS ===========%s\n", YEL, WHT);
 
 	// "%-*s" will left-align text in a field of width 'pad_width'
-	printf("%s%-*s%s%s\n", YEL, pad_width, "Program:", WHT, data->progname);
+	fprintf(file, "%s%-*s%s%s\n", YEL, pad_width, "Program:", WHT, data->progname);
 
-	printf("%s%-*s%s", YEL, pad_width, "Hosts:", WHT);
+	fprintf(file, "%s%-*s%s", YEL, pad_width, "Hosts:", WHT);
 	while (hosts) {
-		printf("%s%s", hosts->host, hosts->next ? ", " : "");
+		fprintf(file, "%s%s", hosts->host, hosts->next ? ", " : "");
 		hosts = hosts->next;
 	}
-	printf("\n");
+	fprintf(file, "\n");
 
-	printf("%s%-*s%s%d\n", YEL, pad_width, "Socket:", WHT, data->socket);
-	printf("%s%-*s%s%s\n", YEL, pad_width, "Verbose:", WHT,
+	fprintf(file, "%s%-*s%s%d\n", YEL, pad_width, "Socket:", WHT, data->socket);
+	fprintf(file, "%s%-*s%s%s\n", YEL, pad_width, "Verbose:", WHT,
 		data->is_verbose ? "enabled" : "disabled");
-	printf("%s%-*s%s%d\n", YEL, pad_width, "Count:", WHT, data->count_max);
-	printf("%s%-*s%s%d\n", YEL, pad_width, "Interval:", WHT, data->interval);
+	fprintf(file, "%s%-*s%s%d\n", YEL, pad_width, "Count:", WHT, data->count_max);
+	fprintf(file, "%s%-*s%s%d\n", YEL, pad_width, "Interval:", WHT, (int)data->interval.tv_sec);
 
-	printf("%s=============================%s\n", YEL, WHT);
-	fflush(stdout);
+	fprintf(file, "%s=============================%s\n", YEL, WHT);
+	fflush(file);
 }
 
-void print_hosts_info(struct s_hosts *hosts)
-{
+void print_hosts_info(FILE *file, struct s_hosts *hosts) {
     const int pad_width = 15;
     int max_host_len = 0;
 
@@ -74,24 +73,24 @@ void print_hosts_info(struct s_hosts *hosts)
         // First line: aligned =
         int left_eq = (total_width - (int)strlen(hosts->host)) / 2;
         int right_eq = total_width - left_eq - (int)strlen(hosts->host);
-        printf("%s%.*s %s%s%s %.*s%s\n", 
+        fprintf(file, "%s%.*s %s%s%s %.*s%s\n", 
                YEL, left_eq, "==============================", 
                BLU, hosts->host, YEL, 
                right_eq, "==============================", WHT);
 
         // Align the labels like in print_info
-        printf("%s%-*s%s%d\n", YEL, pad_width, "sent:", WHT, hosts->stats.sent);
-        printf("%s%-*s%s%d\n", YEL, pad_width, "received:", WHT, hosts->stats.received);
-        printf("%s%-*s%s%d\n", YEL, pad_width, "lost:", WHT, hosts->stats.lost);
-        printf("%s%-*s%s%.2f ms\n", YEL, pad_width, "avg_time:", WHT, hosts->stats.avg_time);
-        printf("%s%-*s%s%.2f ms\n", YEL, pad_width, "min_time:", WHT, hosts->stats.min_time);
-        printf("%s%-*s%s%.2f ms\n", YEL, pad_width, "max_time:", WHT, hosts->stats.max_time);
-        printf("%s%-*s%s%.2f ms\n", YEL, pad_width, "stddev_time:", WHT, hosts->stats.stddev_time);
-        printf("%s%-*s%s%zu\n", YEL, pad_width, "host idx:", WHT, hosts->host_idx);
+        fprintf(file, "%s%-*s%s%d\n", YEL, pad_width, "sent:", WHT, hosts->stats.sent);
+        fprintf(file, "%s%-*s%s%d\n", YEL, pad_width, "received:", WHT, hosts->stats.received);
+        fprintf(file, "%s%-*s%s%d\n", YEL, pad_width, "lost:", WHT, hosts->stats.lost);
+        fprintf(file, "%s%-*s%s%.2f ms\n", YEL, pad_width, "avg_time:", WHT, hosts->stats.avg_time);
+        fprintf(file, "%s%-*s%s%.2f ms\n", YEL, pad_width, "min_time:", WHT, hosts->stats.min_time);
+        fprintf(file, "%s%-*s%s%.2f ms\n", YEL, pad_width, "max_time:", WHT, hosts->stats.max_time);
+        fprintf(file, "%s%-*s%s%.2f ms\n", YEL, pad_width, "stddev_time:", WHT, hosts->stats.stddev_time);
+        fprintf(file, "%s%-*s%s%zu\n", YEL, pad_width, "host idx:", WHT, hosts->host_idx);
 
         // Last line: same width as top
-        printf("%s%.*s%s\n", YEL, total_width + 2, "==============================", WHT);
-        printf("\n");
+        fprintf(file, "%s%.*s%s\n", YEL, total_width + 2, "==============================", WHT);
+        fprintf(file, "\n");
 
         hosts = hosts->next;
     }

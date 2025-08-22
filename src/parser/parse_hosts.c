@@ -38,7 +38,7 @@ bool	parse_hosts(struct s_ping *data, char *argv[])
 		if (ft_strlen(host) <= HOST_NAME_MAX) {
 			strcpy(hosts->host, host); 
 		} else {
-			log_error("Host name is too long", get_logfile());
+			log_event(LOG_ERROR, get_logfile(), 0, "Host name is too long");
 			return false;
 		}
 		hosts->host_idx = tmp - optind - 1;
@@ -47,7 +47,7 @@ bool	parse_hosts(struct s_ping *data, char *argv[])
 		if (argv[tmp])
 			hosts->next = calloc(1, sizeof(struct s_hosts));
 		if (argv[tmp] && !hosts->next) {
-			log_strerror("Failed to allocate hosts", get_logfile());
+			log_event(LOG_ERROR, get_logfile(), 1, "Failed to allocate hosts");
 			return (false);
 		}
 		hosts = hosts->next;

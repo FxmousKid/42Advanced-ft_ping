@@ -15,7 +15,33 @@
 // #include <sys/socket.h>
 #include "ft_ping.h"
 
-int	atexit(void (*f)(void));
+/**
+ * @brief set socket options
+ *
+ * @param data main context structure pointer
+ * @return 
+ *  @retval true if options have been successfully set
+ *  @retval false if setsockopt failed
+ */
+bool	set_socket_options(struct s_ping *data)
+{
+	int	status = 0;
+
+	if (!status && data->interval.tv_sec) {
+		
+		struct timeval i = data->interval;
+		status = setsockopt(
+			data->socket,
+			SOL_SOCKET,
+			SO_RCVTIMEO,
+			&i,
+			sizeof(i)
+		);	
+		if (status)
+			log_event(LOG_ERROR, get_logfile(), 1, "setsockopt()");
+	}
+	return (status == 0);
+}
 
 /**
  * @brief function for setting up internet communications
@@ -30,9 +56,12 @@ bool	inet_setup(struct s_ping *data)
 {
 	data->socket = get_socket_icmp();
 	atexit(close_socket_icmp);
-	log_success("Socket created", get_logfile());
+	log_event(LOG_SUCC, get_logfile(), 0, "Successfully created socket = %d", data->socket);
 
-	
-	
+	if (!set_socket_options(data)) {
+		log_event(LOG_ERROR, 0, get_logfile(), "Failed to set socket options");
+		fatal_error("Failed to set socket options");
+	}
+
 	return true;
 }
