@@ -158,6 +158,8 @@ int	get_socket_icmp(void);
 /** @brief closes the socket created with get_socket_icmp().
  * @details should only be called by atexit(3) when exit(2)*/
 void	close_socket_icmp(void);
+/** @brief set the appropriate socket options. */
+bool	set_socket_options(struct s_ping *data);
 /** @brief creates and allocates the internet stuff
  * @details creates and allocates the ICMP socket.  */
 bool	inet_setup(struct s_ping *data);

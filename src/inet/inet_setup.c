@@ -16,34 +16,6 @@
 #include "ft_ping.h"
 
 /**
- * @brief set socket options
- *
- * @param data main context structure pointer
- * @return 
- *  @retval true if options have been successfully set
- *  @retval false if setsockopt failed
- */
-bool	set_socket_options(struct s_ping *data)
-{
-	int	status = 0;
-
-	if (!status && data->interval.tv_sec) {
-		
-		struct timeval i = data->interval;
-		status = setsockopt(
-			data->socket,
-			SOL_SOCKET,
-			SO_RCVTIMEO,
-			&i,
-			sizeof(i)
-		);	
-		if (status)
-			log_event(LOG_ERROR, get_logfile(), 1, "setsockopt()");
-	}
-	return (status == 0);
-}
-
-/**
  * @brief function for setting up internet communications
  *
  * @param data	ptr to main context structure
