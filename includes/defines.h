@@ -8,6 +8,8 @@
 #  define LIBFT_PATH "../libft/includes/libft.h"
 # endif
 
+# define STRINGIFY(x) #x
+
 // Errors 
 # define EXIT_SUCCESS	0
 # define EXIT_NO_RPL	1
@@ -23,7 +25,10 @@
 # define MORE_INFO_MSG(name)		fprintf(stderr, "Try '%s --help' for more information.\n", (name));
 
 // logging
-# define LOGFILE_NAME	"logfile.txt"
+# ifndef LOGFILE_NAME
+#  define LOGFILE_NAME	"logfile.txt"
+# endif
+
 # define LOG_SUCC	3
 # define LOG_EVENT	2
 # define LOG_WARN	1

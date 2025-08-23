@@ -6,7 +6,7 @@
 #    By: inazaria <inazaria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 18:04:01 by inazaria          #+#    #+#              #
-#    Updated: 2025/08/21 23:20:48 by inazaria         ###   ########.fr        #
+#    Updated: 2025/08/24 02:00:11 by inazaria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,11 @@ INC_DIR 	= ./includes/
 
 LIBFT_DIR 	= ./libft/
 
-DOCS_DIR 			= docs
+DOCS_DIR 		= docs
 DOXYFILE_IN 		= $(DOCS_DIR)/Doxyfile.in
 DOXYFILE 		= $(DOCS_DIR)/Doxyfile
+
+LOGFILE	:= logfile.txt
 
 # .c files for source code SRC_FILES_NAMES = main.c
 SRC_FILES_NAMES = main.c
@@ -55,8 +57,8 @@ DEP_FILES = $(patsubst $(SRC_DIR)%.c, $(BUILD_DIR)%.d, $(SRC_FILES))
 
 NAME 	:= ft_ping
 CC 	:= cc
-CFLAGS 	:= -gdwarf-4 -Wall -Wextra -Werror -I $(INC_DIR) -MMD -MP
-LFLAGS 	:= libft/libft.a
+CFLAGS 	:= -gdwarf-4 -Wall -Wextra -Werror -I $(INC_DIR) -MMD -MP -DLOGFILE_NAME=\"$(LOGFILE)\"
+LFLAGS 	:= libft/libft.a 
 MKDIR 	:= mkdir -p
 RM_RF 	:= rm -rf
 ECHO  	:= echo -e
