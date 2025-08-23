@@ -35,6 +35,8 @@ static void	hosts_free_aux(struct s_hosts *hosts)
 
 	while (hosts) {
 		tmp = hosts->next;
+		if (hosts->name)
+			free(hosts->name);
 		free(hosts);
 		hosts = tmp;
 	}
