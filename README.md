@@ -8,6 +8,17 @@ with the following minimum constraints :
 - managing simple IPv4 (address/hostname) as parameters
 - managing FQDN without DNS resolution in packet return
 
+## Installation
+
+> [!WARNING]
+> ft_ping uses SOCK_RAW (raw sockets), and therefore needs super user permission
+> A - run with sudo (please don't)
+> B - run sudo ```setcap cap_net_raw+ep [full/ft_ping/executable/path]```
+
+> [!NOTE]
+> to run with valgrind, DON'T run cap_net_raw on the executable (or rebuild it)
+> and run valgrind on ft_ping with sudo ```sudo valgrind [path/ft_ping/] ...```
+
 ## Usage
 
 ```bash 

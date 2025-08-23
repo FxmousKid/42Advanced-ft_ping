@@ -30,8 +30,8 @@ int	get_socket_icmp(void)
 {
 	static int sockfd = 0;
 
-	if (!sockfd)
-		sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
+	if (!sockfd && (sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) > 0)
+		log_event(LOG_SUCC, get_logfile(), 0, SUCC_SOCKET_CREATE, sockfd);
 
 	if (sockfd < 0) {
 		log_event(LOG_ERROR, get_logfile(), 1, EROR_SOCKET_CREATE);
@@ -68,8 +68,12 @@ bool	set_socket_options(struct s_ping *data)
 			&i,
 			sizeof(i)
 		);
-		if (status != 0)
+		if (status)
 			return false;
 	}
+
+	if (!status)
+		log_event(LOG_SUCC, get_logfile(), 1, SUCC_SOCKET_SET_OPTIONS);
+
 	return (status == 0);
 }

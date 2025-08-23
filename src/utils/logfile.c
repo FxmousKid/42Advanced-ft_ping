@@ -20,11 +20,11 @@ FILE	*get_logfile(void)
 {
 	static FILE *logfile = NULL;
 
-	if (!logfile)
-		logfile = fopen(LOGFILE_NAME, "w");
+	if (!logfile && (logfile = fopen(LOGFILE_NAME, "w")))
+		log_event(LOG_SUCC, get_logfile(), 0, SUCC_LOGFILE_CREATION, logfile);
 
 	if (!logfile) {
-		fatal_strerror("Log file creation");
+		fatal_strerror(EROR_LOGFILE_CREATION);
 	}
 
 	return logfile;

@@ -30,7 +30,8 @@
 # define LOG_ERROR	0
 
 // Logging messages
-# define SUCC_
+# define SUCC_LOGFILE_CREATION "Successfully created logfile : %p"
+# define EROR_LOGFILE_CREATION "Failed to create logfile"
 
 # define SUCC_SOCKET_CREATE "Successfully created socket, ret = %d"
 # define EROR_SOCKET_CREATE "Failed to create socket"
