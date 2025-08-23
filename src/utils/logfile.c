@@ -35,20 +35,19 @@ void	log_close(void)
 	fclose(get_logfile());
 }
 
-
 /**
- * @brief log an event to the logfile
+ * @brief internal function for logging, caller agnostic so handles 
+ * printf and vprintf like calls
  *
  * @param level the log level (format differences), a macro
  * @param file the FILE * to log the content into
  * @param is_errno to call or not strerror() in log
+ * @param ap the va_list created by another variadic function
  * @param fmt the variadic print-like format
  */
-void	log_event(int level, FILE *file, bool is_errno, const char *fmt, ...)
+static inline void log_event_internal(int level, FILE *file, bool is_errno,
+				      va_list ap, const char *fmt, ...)
 {
-	va_list ap;
-	va_start(ap, fmt);
-
 	switch (level) {
 	case LOG_SUCC:
 		fprintf(file, "%s[SUCES] ", GRN);
@@ -73,5 +72,34 @@ void	log_event(int level, FILE *file, bool is_errno, const char *fmt, ...)
 	}
 	fprintf(file, "\n");
 	fflush(file);
-	va_end(ap);	
+}
+
+/**
+ * @brief log an event to the logfile
+ *
+ * @param level the log level (format differences), a macro
+ * @param file the FILE * to log the content into
+ * @param is_errno to call or not strerror() in log
+ * @param fmt the variadic print-like format
+ */
+void	log_event(int level, FILE *file, bool is_errno, const char *fmt, ...)
+{
+	va_list ap;
+	va_start(ap, fmt);
+	log_event_internal(level, file, is_errno, ap, fmt);
+	va_end(ap);
+}
+
+/**
+ * @brief log an event to the logfile -- vprintf style
+ *
+ * @param level the log level (format differences), a macro
+ * @param file the FILE * to log the content into
+ * @param is_errno to call or not strerror() in log
+ * @param fmt the variadic print-like format
+ * @param ap the va_list created by another variadic function
+ */
+void	vlog_event(int level, FILE *file, bool is_errno, const char *fmt, va_list ap)
+{
+	log_event_internal(level, file, is_errno, ap, fmt);
 }

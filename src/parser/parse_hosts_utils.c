@@ -22,8 +22,8 @@ struct s_hosts	*get_hosts(void)
 		hosts = calloc(1, sizeof(struct s_hosts));
 
 	if (!hosts) {
-		log_event(LOG_ERROR, get_logfile(), 1, "Failed to create hosts");
-		fatal_strerror("Failed to create hosts");
+		log_event(LOG_ERROR, get_logfile(), 1, EROR_HOST_ALLOC_FAILED);
+		fatal_strerror(EROR_HOST_ALLOC_FAILED);
 	}
 
 	return hosts;

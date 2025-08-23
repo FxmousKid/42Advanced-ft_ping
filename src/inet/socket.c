@@ -34,8 +34,8 @@ int	get_socket_icmp(void)
 		sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 
 	if (sockfd < 0) {
-		log_event(LOG_ERROR, get_logfile(), 1, "socket() failed, ret = %d", sockfd);
-		fatal_error("Failed to create socket");
+		log_event(LOG_ERROR, get_logfile(), 1, EROR_SOCKET_CREATE);
+		fatal_error(EROR_SOCKET_CREATE);
 	}
 	
 	return sockfd;
@@ -58,7 +58,7 @@ bool	set_socket_options(struct s_ping *data)
 {
 	int	status = 0;
 
-	if (!status && data->interval.tv_sec) {
+	if (data->interval.tv_sec) {
 
 		struct timeval i = data->interval;
 		status = setsockopt(
@@ -68,8 +68,8 @@ bool	set_socket_options(struct s_ping *data)
 			&i,
 			sizeof(i)
 		);
-		if (status)
-			log_event(LOG_ERROR, get_logfile(), 1, "setsockopt()");
+		if (status != 0)
+			return false;
 	}
 	return (status == 0);
 }

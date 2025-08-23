@@ -55,7 +55,7 @@ struct s_stats {
 };
 
 struct s_hosts {
-	char			host[_POSIX_HOST_NAME_MAX + 1]; // + 1 for '\0'
+	char			*name;
 	struct s_stats		stats;
 	struct in_addr		ip;
 	struct s_hosts		*next;
@@ -146,6 +146,8 @@ FILE	*get_logfile(void);
  * on the given log level. */
 void	log_event(int level, FILE *file, bool is_errno, const char *fmt, ...)
 	__attribute__((format(printf, 4, 5)));
+/** @brief same as log_event, but vprintf style. */
+void	vlog_event(int level, FILE *file, bool is_errno, const char *fmt, va_list ap);
 /** @brief calls log_error() then calls fatal(). */
 void	log_close(void);
 

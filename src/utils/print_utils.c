@@ -39,7 +39,7 @@ void	print_info(FILE *file, struct s_ping *data)
 
 	fprintf(file, "%s%-*s%s", YEL, pad_width, "Hosts:", WHT);
 	while (hosts) {
-		fprintf(file, "%s%s", hosts->host, hosts->next ? ", " : "");
+		fprintf(file, "%s%s", hosts->name, hosts->next ? ", " : "");
 		hosts = hosts->next;
 	}
 	fprintf(file, "\n");
@@ -61,7 +61,7 @@ void print_hosts_info(FILE *file, struct s_hosts *hosts) {
     // First pass: find longest host name
     struct s_hosts *tmp = hosts;
     while (tmp) {
-        int len = strlen(tmp->host);
+        int len = strlen(tmp->name);
         if (len > max_host_len) max_host_len = len;
         tmp = tmp->next;
     }
@@ -71,11 +71,11 @@ void print_hosts_info(FILE *file, struct s_hosts *hosts) {
 
     while (hosts) {
         // First line: aligned =
-        int left_eq = (total_width - (int)strlen(hosts->host)) / 2;
-        int right_eq = total_width - left_eq - (int)strlen(hosts->host);
+        int left_eq = (total_width - (int)strlen(hosts->name)) / 2;
+        int right_eq = total_width - left_eq - (int)strlen(hosts->name);
         fprintf(file, "%s%.*s %s%s%s %.*s%s\n", 
                YEL, left_eq, "==============================", 
-               BLU, hosts->host, YEL, 
+               BLU, hosts->name, YEL, 
                right_eq, "==============================", WHT);
 
         // Align the labels like in print_info

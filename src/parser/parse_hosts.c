@@ -15,7 +15,8 @@
 #include "ft_ping.h"
 #include <regex.h>
 #include <getopt.h>
-#include LIBFT_PATH
+#include <string.h>
+#include <stdlib.h>
 
 bool	parse_hosts(struct s_ping *data, char *argv[])
 {
@@ -31,27 +32,32 @@ bool	parse_hosts(struct s_ping *data, char *argv[])
 	// regfree(&ip_regex);
 
 	struct s_hosts	*hosts = get_hosts();
-	char		*host = argv[optind];
+	char		*host_name = argv[optind];
 	int		tmp = optind;
 	
-	while ((host = argv[tmp++])) {
-		if (ft_strlen(host) <= HOST_NAME_MAX) {
-			strcpy(hosts->host, host); 
+	while ((host_name = argv[tmp++])) {
+		if ((hosts->name = calloc(1, strlen(host_name) + 1))) {
+			strcpy(hosts->name, host_name); 
 		} else {
-			log_event(LOG_ERROR, get_logfile(), 0, "Host name is too long");
+			log_event(LOG_ERROR, get_logfile(), 0, 
+				EROR_HOST_NAME_ALLOC_FAILED, host_name);
 			return false;
 		}
+		/** @brief remember now that argv is sorted :
+		*   prog name - option 1 - ... - option n - arg 1 - ... - arg n - '\0'
+		*   and optind is the index of the last option, so tmp - optind - 1 is
+		*   the 0-indexed positions of the arguments
+		*   . */
 		hosts->host_idx = tmp - optind - 1;
 		
-		// if hosts are left, to allocate, else do nothing
+		// if there are hosts left to parse, then allocate, else do nothing
 		if (argv[tmp])
 			hosts->next = calloc(1, sizeof(struct s_hosts));
 		if (argv[tmp] && !hosts->next) {
-			log_event(LOG_ERROR, get_logfile(), 1, "Failed to allocate hosts");
+			log_event(LOG_ERROR, get_logfile(), 1, EROR_HOST_ALLOC_FAILED);
 			return (false);
 		}
 		hosts = hosts->next;
-	}
-		
+	}	
 	return true;
 }

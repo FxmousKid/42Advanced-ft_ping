@@ -23,7 +23,7 @@
 
 
 /**
- * @brief 
+ * @brief variadic error 
  *
  * @param data 
  * @param fmt 
@@ -34,7 +34,8 @@ void	opts_error(struct s_ping *data, const char *fmt, ...)
 	va_list ap;
 	va_start(ap, fmt);
 	vfprintf(stderr, fmt, ap);
-	vfprintf(get_logfile(), fmt, ap);
+	fprintf(stderr, "\n");
+	vlog_event(LOG_ERROR, get_logfile(), false, fmt, ap);
 	va_end(ap);
 	data->exit_code = EXIT_BAD_ARGS;
 }
@@ -77,7 +78,7 @@ bool opts_handle(struct option *lopts, int lopts_idx, char *argv[],
 
 	case 'c':
 		if (!optarg || (arg = atoi(optarg)) <= 0) {
-			opts_error(data, "-c expects a count >= 0, got : %d\n", arg);
+			opts_error(data, EROR_COUNT_OPTION_BAD_COUNT, arg);
 			return false;
 		}
 		data->count_max = arg;
@@ -86,7 +87,7 @@ bool opts_handle(struct option *lopts, int lopts_idx, char *argv[],
 	// Takes NUMBER and waits NUMBER seconds for each ping
 	case 'i':
 		if (!optarg || (arg = atoi(optarg)) < 0) {
-			opts_error(data, "-i expects a number > 0, got : %d\n", arg);
+			opts_error(data, EROR_INTERVAL_OPTION_BAD_COUNT, arg);
 			return false;
 		}
 		data->interval.tv_sec = arg;
@@ -168,8 +169,9 @@ void parse_cli(int argc, char *argv[], struct s_ping *data)
 
 	// all non option arguments are considered hosts
 	// and should there be all parsed
-	if (!parse_hosts(data, argv))
-		log_event(LOG_ERROR, get_logfile(), 0, "Failed to parse hosts");
+	if (!parse_hosts(data, argv)) {
+		log_event(LOG_ERROR, get_logfile(), 0, EROR_HOST_PARSING);
+	}
 
 	// if -d was passed
 	if (data->debug) {

@@ -29,7 +29,23 @@
 # define LOG_WARN	1
 # define LOG_ERROR	0
 
-	
+// Logging messages
+# define SUCC_
+
+# define SUCC_SOCKET_CREATE "Successfully created socket, ret = %d"
+# define EROR_SOCKET_CREATE "Failed to create socket"
+
+# define SUCC_SOCKET_SET_OPTIONS "Successfully set socket options"
+# define EROR_SOCKET_SET_OPTIONS "Failed to set socket options"
+
+# define EROR_HOST_ALLOC_FAILED "Failed to allocate hosts"
+# define EROR_HOST_NAME_ALLOC_FAILED "Failed to allocate space for host : %s"
+# define EROR_HOST_PARSING "Failed to parse hosts"
+
+# define EROR_COUNT_OPTION_BAD_COUNT "-c expects a count >= 0, got : %d"
+# define EROR_INTERVAL_OPTION_BAD_COUNT "-i expects a number > 0, got : %d"
+
+
 
 # define VERSION "\
 ft_ping 1.0\n\

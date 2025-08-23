@@ -18,23 +18,6 @@ int	getpid();
 /** @brief to copy payload into packet. */
 void	*memcpy(void *, const void *, unsigned long);
 
-
-#include <limits.h>
-void binprintf(int v)
-{
-	int c = 1;
-	unsigned int mask = 1 << (sizeof(uint16_t) * CHAR_BIT - 1);
-	printf("0x");
-	while (mask) {
-		printf("%d", (v&mask ? 1 : 0));
-		if (c == 16) {break;}
-		if (!(c % 4)) {printf(" ");}
-		c++;
-		mask >>= 1;
-	}
-}
-
-
 /**
  * @brief interal function to calculate the checksum
  *
@@ -98,7 +81,6 @@ void	checksum(struct s_icmp_packet *pack)
 struct s_icmp_packet make_packet(struct s_ping *data, bool is_req)
 {
 	(void)data;
-
 	static int seq_number = 0;
 
 	struct s_icmp_packet packet = {
